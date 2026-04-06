@@ -1,0 +1,258 @@
+openapi: 3.0.0
+info:
+  title: Smart Grid API
+  version: 1.0.0
+paths:
+  /register:
+    post:
+      summary: Register new user
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User created
+        '400':
+          description: User already exists
+  /login:
+    post:
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successful
+        '401':
+          description: Invalid credentials
+  /profile:
+    get:
+      summary: Get user profile
+      responses:
+        '200':
+          description: Profile data returned
+        '401':
+          description: Unauthorized, user not logged in
+  /logout:
+    get:
+      summary: Logout user
+      responses:
+        '200':
+          description: Logout successful
+  /generators:
+    get:
+      summary: List generators
+      responses:
+        '200':
+          description: List of generators
+        '500':
+          description: Database error
+    post:
+      summary: Add generator
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                power:
+                  type: integer
+                status:
+                  type: string
+      responses:
+        '201':
+          description: Generator created
+        '400':
+          description: Invalid input
+  /generators/edit:
+    post:
+      summary: Edit generator status
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+      responses:
+        '200':
+          description: Generator updated
+        '400':
+          description: Invalid input
+        '500':
+          description: Database error
+  /generators/delete:
+    get:
+      summary: Delete generator
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Generator deleted
+        '404':
+          description: Generator not found
+  /consumers:
+    get:
+      summary: List consumers
+      responses:
+        '200':
+          description: List of consumers
+        '500':
+          description: Database error
+    post:
+      summary: Add consumer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                load:
+                  type: integer
+                status:
+                  type: string
+      responses:
+        '201':
+          description: Consumer created
+        '400':
+          description: Invalid input
+  /consumers/edit:
+    post:
+      summary: Edit consumer status
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+      responses:
+        '200':
+          description: Consumer updated
+        '400':
+          description: Invalid input
+        '500':
+          description: Database error
+  /consumers/delete:
+    get:
+      summary: Delete consumer
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Consumer deleted
+        '404':
+          description: Consumer not found
+  /sensors:
+    get:
+      summary: List sensors
+      responses:
+        '200':
+          description: List of sensors
+        '500':
+          description: Database error
+    post:
+      summary: Add sensor
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                value:
+                  type: integer
+                unit:
+                  type: string
+      responses:
+        '201':
+          description: Sensor created
+        '400':
+          description: Invalid input
+  /sensors/edit:
+    post:
+      summary: Edit sensor value
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: integer
+      responses:
+        '200':
+          description: Sensor updated
+        '400':
+          description: Invalid input
+        '500':
+          description: Database error
+  /sensors/delete:
+    get:
+      summary: Delete sensor
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sensor deleted
+        '404':
+          description: Sensor not found
